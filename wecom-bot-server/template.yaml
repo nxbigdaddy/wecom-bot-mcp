@@ -1,0 +1,38 @@
+# Serverless 部署配置（AWS Lambda）
+AWSTemplateFormatVersion: '2010-09-09'
+Description: WeCom Bot Server Lambda Function
+
+Resources:
+  WeComBotFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: wecom-bot-server
+      Runtime: python3.11
+      Handler: wecom_bot.main.app
+      MemorySize: 256
+      Timeout: 30
+      Architectures:
+        - x86_64
+      Environment:
+        Variables:
+          WECOM_BOT_WEBHOOK_KEY: !Ref WeComBotWebhookKey
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+      Tags:
+        Project: WeCom-Bot-Server
+        Environment: Production
+
+Parameters:
+  WeComBotWebhookKey:
+    Type: String
+    Description: WeCom Bot Webhook Key
+    NoEcho: true
+
+Outputs:
+  ApiUrl:
+    Description: API Gateway URL
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

@@ -1,0 +1,11 @@
+# 忽略文件
+node_modules/
+dist/
+.env.local
+.env.*.local
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.md

@@ -1,0 +1,22 @@
+# Serverless 部署配置（Vercel）
+{
+  "version": 2,
+  "name": "wecom-bot-server",
+  "builds": [
+    {
+      "src": "wecom_bot/main.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "wecom_bot/main.py"
+    }
+  ],
+  "env": {
+    "WECOM_BOT_WEBHOOK_KEY": "@wecom-bot-webhook-key"
+  },
+  "regions": ["hnd1"],
+  "public": true
+}
